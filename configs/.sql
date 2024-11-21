@@ -29,3 +29,4 @@ CREATE TABLE IF NOT EXISTS articles (
 
 INSERT INTO roles (name) VALUES ('admin'), ('editor'), ('reader')
 ON DUPLICATE KEY UPDATE name=name;
+
