@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const db = require('../configs/initDB');
+const db = require('../configs/connectDB');
+const bcrypt = require('bcryptjs');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
@@ -24,10 +25,10 @@ const registerUser = async (req, res) => {
   });
 };
 
-const authUser = async (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findByUsername(username);
-  if (user && (await User.matchPassword(password, user.password))) {
+  if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user.id,
       username: user.username,
@@ -39,4 +40,8 @@ const authUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, authUser };
+const logout = (req, res) => {
+  res.status(200).json({ message: 'Logged out successfully' });
+};
+
+module.exports = { registerUser, login, logout };

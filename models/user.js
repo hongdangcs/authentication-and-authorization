@@ -1,6 +1,6 @@
-const db = require('../config/db');
+const db = require('../configs/connectDB');
 const bcrypt = require('bcryptjs');
-const hashPassword = require('../utils/hashPassword');
+const hashPassword = require('../utils/hash-password');
 
 class User {
   constructor(username, password) {

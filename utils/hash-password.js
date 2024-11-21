@@ -2,7 +2,8 @@ const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv');
 
 const hashPassword = async (password) => {
-  const salt = process.env.HASH_CODE;
+  const salt = 10;
+  password = password + process.env.HASH_CODE;
   const hashedPassword = await bcrypt.hash(password, salt);
   return hashedPassword;
 };
