@@ -1,4 +1,4 @@
-const db = require('../configs/connectDB');
+const db = require('../configs/connectDB').pool;
 const bcrypt = require('bcryptjs');
 const hashPassword = require('../utils/hash-password');
 
@@ -9,7 +9,6 @@ class User {
   }
 
   async save() {
-    this.password = await hashPassword(this.password);
     const [result] = await db.execute(
       'INSERT INTO users (username, password) VALUES (?, ?)',
       [this.username, this.password]
